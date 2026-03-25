@@ -8,12 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
-  "lint-staged": {
-  "src/**/*.{ts,html}": "eslint --fix",
-  "src/**/*.{ts,html,scss}": "prettier --write"
-},
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
@@ -47,11 +43,16 @@
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^8.0.3",
     "jsdom": "^27.1.0",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.56.1",
-    "vitest": "^4.0.8",
-    "husky": "^8.0.0"
+    "vitest": "^4.0.8"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.html": "prettier --write"
   }
 }
