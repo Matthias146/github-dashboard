@@ -1,0 +1,46 @@
+@let isLoading = state.reposResource.isLoading();
+@let stats = state.languageStats();
+
+<section class="stats">
+  <h3 class="stats__title">Language Stats</h3>
+
+  @if (isLoading) {
+    <div
+      class="skeleton"
+      style="width: 100%; height: 12px; border-radius: 6px; margin-bottom: 16px"
+    ></div>
+    @for (i of [1, 2, 3, 4, 5]; track i) {
+      <div class="stats__skeleton-row">
+        <div class="skeleton" style="width: 12px; height: 12px; border-radius: 50%"></div>
+        <div class="skeleton" style="width: 80px; height: 13px; border-radius: 4px"></div>
+        <div
+          class="skeleton"
+          style="width: 36px; height: 13px; border-radius: 4px; margin-left: auto"
+        ></div>
+      </div>
+    }
+  } @else if (stats.length > 0) {
+    <div class="stats__bar">
+      @for (item of stats; track item.language) {
+        <span
+          class="stats__bar-segment"
+          [style.width.%]="item.percentage"
+          [style.background]="getLangVar(item.language)"
+          [title]="item.language + ' ' + item.percentage + '%'"
+        ></span>
+      }
+    </div>
+
+    <ul class="stats__list">
+      @for (item of stats; track item.language) {
+        <li class="stats__item">
+          <span class="stats__dot" [style.background]="getLangVar(item.language)"></span>
+          <span class="stats__lang">{{ item.language }}</span>
+          <span class="stats__percentage mono">{{ item.percentage }}%</span>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="stats__empty">No language data available.</p>
+  }
+</section>

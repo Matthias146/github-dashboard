@@ -50,8 +50,13 @@
 <main class="main">
   <div class="container">
     <div class="dashboard">
-      <app-profile />
-      <app-repositories />
+      <div class="dashboard__main">
+        <app-profile />
+        <app-repositories />
+      </div>
+      <aside class="dashboard__sidebar">
+        <app-stats />
+      </aside>
     </div>
   </div>
 </main>

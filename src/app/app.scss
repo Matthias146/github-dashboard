@@ -106,7 +106,30 @@
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 260px;
   gap: var(--space-lg);
+  align-items: flex-start;
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    min-width: 0;
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 72px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+
+    &__sidebar {
+      position: static;
+    }
+  }
 }
