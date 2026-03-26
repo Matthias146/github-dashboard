@@ -1,0 +1,106 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  height: 56px;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    height: 100%;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  &__logo {
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+  }
+
+  &__search {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 10px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  &__input {
+    width: 100%;
+    height: 32px;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 0 36px 0 32px;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent-blue-muted);
+      box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.15);
+    }
+  }
+
+  &__kbd {
+    position: absolute;
+    right: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 1px 5px;
+  }
+
+  &__meta {
+    margin-left: auto;
+  }
+
+  &__rate-limit {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  &__rate-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-success);
+  }
+}
+
+.main {
+  padding: var(--space-xl) 0;
+}

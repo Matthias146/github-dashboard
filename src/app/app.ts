@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { GithubStateService } from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,18 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('github-dashboard');
+  protected readonly state = inject(GithubStateService);
+
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.value.trim()) {
+      this.state.searchUser(input.value);
+    }
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      this.onSearch(event);
+    }
+  }
 }
