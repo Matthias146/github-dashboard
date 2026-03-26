@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { GithubStateService } from './core/services';
+import { Profile } from './features/profile/profile';
+import { Repositories } from './features/repositories/repositories';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Profile, Repositories],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
