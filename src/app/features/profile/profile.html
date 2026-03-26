@@ -1,0 +1,103 @@
+@let user = state.userResource.value();
+@let isLoading = state.userResource.isLoading();
+
+@if (isLoading) {
+  <div class="profile">
+    <div
+      class="profile__avatar skeleton"
+      style="width: 80px; height: 80px; border-radius: 50%"
+    ></div>
+    <div style="flex: 1">
+      <div
+        class="skeleton"
+        style="width: 160px; height: 20px; margin-bottom: 8px; border-radius: 4px"
+      ></div>
+      <div
+        class="skeleton"
+        style="width: 120px; height: 16px; margin-bottom: 16px; border-radius: 4px"
+      ></div>
+      <div
+        class="skeleton"
+        style="width: 100%; height: 14px; margin-bottom: 6px; border-radius: 4px"
+      ></div>
+      <div class="skeleton" style="width: 80%; height: 14px; border-radius: 4px"></div>
+    </div>
+  </div>
+} @else if (user) {
+  <div class="profile">
+    <img
+      class="profile__avatar"
+      [ngSrc]="user.avatar_url"
+      [alt]="user.login"
+      width="80"
+      height="80"
+      priority
+    />
+
+    <div class="profile__info">
+      <div class="profile__names">
+        <h2 class="profile__name">{{ user.name }}</h2>
+        <span class="profile__login mono">{{ '@' + user.login }}</span>
+      </div>
+
+      @if (user.bio) {
+        <p class="profile__bio">{{ user.bio }}</p>
+      }
+
+      <div class="profile__stats">
+        <span class="profile__stat">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path
+              d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.873 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"
+            />
+          </svg>
+          <span class="mono">{{ state.totalStars() }}</span> stars
+        </span>
+        <span class="profile__stat">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path
+              d="M2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5z"
+            />
+          </svg>
+          <span class="mono">{{ user.followers }}</span> followers
+        </span>
+        <span class="profile__stat">
+          <span class="mono">{{ user.following }}</span> following
+        </span>
+      </div>
+
+      <div class="profile__meta">
+        @if (user.location) {
+          <span class="profile__meta-item">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+              <path
+                d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.534a5 5 0 117.072-7.072v.001zm1.06 8.132a6.5 6.5 0 10-9.192 0l3.535 3.536a1.5 1.5 0 002.122 0l3.535-3.536zM8 9a2 2 0 100-4 2 2 0 000 4z"
+              />
+            </svg>
+            {{ user.location }}
+          </span>
+        }
+        @if (user.blog) {
+          <a class="profile__meta-item" [href]="user.blog" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+              <path
+                d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"
+              />
+            </svg>
+            {{ user.blog }}
+          </a>
+        }
+        @if (user.email) {
+          <span class="profile__meta-item">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+              <path
+                d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0114.25 14H1.75A1.75 1.75 0 010 12.25v-8.5C0 2.784.784 2 1.75 2zM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V5.809L8.38 9.397a.75.75 0 01-.76 0L1.5 5.809v6.442zm13-8.181L8 7.58 1.5 4.07v-.32a.25.25 0 01.25-.25h12.5a.25.25 0 01.25.25v.32z"
+              />
+            </svg>
+            {{ user.email }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+}
