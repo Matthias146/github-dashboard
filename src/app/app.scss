@@ -91,6 +91,15 @@
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+
+    &--low {
+      color: var(--color-warning);
+
+      .header__rate-dot {
+        background: var(--color-warning);
+      }
+    }
   }
 
   &__rate-dot {
@@ -98,6 +107,7 @@
     height: 8px;
     border-radius: 50%;
     background: var(--color-success);
+    transition: background var(--transition-fast);
   }
 }
 

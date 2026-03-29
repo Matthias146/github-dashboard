@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { GithubStateService } from './core/services';
+import { GithubStateService, RateLimitService } from './core/services';
 import { Profile } from './features/profile/profile';
 import { Repositories } from './features/repositories/repositories';
 import { Stats } from './features/stats/stats';
@@ -15,6 +15,7 @@ import { ErrorState } from './shared/components/error-state/error-state';
 })
 export class App {
   protected readonly state = inject(GithubStateService);
+  protected readonly rateLimit = inject(RateLimitService);
   protected readonly activeTab = signal<'repos' | 'stats'>('repos');
 
   onKeydown(event: KeyboardEvent): void {

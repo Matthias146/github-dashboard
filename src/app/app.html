@@ -40,10 +40,17 @@
     </div>
 
     <div class="header__meta">
-      <span class="header__rate-limit">
-        <span class="header__rate-dot"></span>
-        57/60 requests
-      </span>
+      @if (rateLimit.display()) {
+        <span class="header__rate-limit" [class.header__rate-limit--low]="rateLimit.isLow()">
+          <span class="header__rate-dot"></span>
+          {{ rateLimit.display()!.remaining }}/{{ rateLimit.display()!.limit }} requests
+        </span>
+      } @else {
+        <span class="header__rate-limit">
+          <span class="header__rate-dot"></span>
+          — requests
+        </span>
+      }
     </div>
   </div>
 </header>
