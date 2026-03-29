@@ -4,10 +4,11 @@ import { Profile } from './features/profile/profile';
 import { Repositories } from './features/repositories/repositories';
 import { Stats } from './features/stats/stats';
 import { StatCard } from './shared/components';
+import { RepoTable } from './features/repo-table/repo-table';
 
 @Component({
   selector: 'app-root',
-  imports: [Profile, Repositories, Stats, StatCard],
+  imports: [Profile, Repositories, Stats, StatCard, RepoTable],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

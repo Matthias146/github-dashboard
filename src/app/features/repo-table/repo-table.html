@@ -1,0 +1,106 @@
+@let isLoading = state.reposResource.isLoading();
+
+<div class="repo-table-wrap">
+  @if (isLoading) {
+    <table class="repo-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Language</th>
+          <th>Stars</th>
+          <th>Forks</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <tr>
+            <td>
+              <div class="skeleton" style="width: 120px; height: 13px; border-radius: 4px"></div>
+            </td>
+            <td>
+              <div class="skeleton" style="width: 70px; height: 13px; border-radius: 4px"></div>
+            </td>
+            <td>
+              <div class="skeleton" style="width: 30px; height: 13px; border-radius: 4px"></div>
+            </td>
+            <td>
+              <div class="skeleton" style="width: 30px; height: 13px; border-radius: 4px"></div>
+            </td>
+            <td>
+              <div class="skeleton" style="width: 80px; height: 13px; border-radius: 4px"></div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <table class="repo-table">
+      <thead>
+        <tr>
+          <th (click)="setSort('name')" class="repo-table__th--sortable">
+            Name
+            <span class="repo-table__sort-icon" [class.active]="sortKey() === 'name'">
+              {{ sortKey() === 'name' && sortDir() === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th>Language</th>
+          <th (click)="setSort('stargazers_count')" class="repo-table__th--sortable">
+            Stars
+            <span class="repo-table__sort-icon" [class.active]="sortKey() === 'stargazers_count'">
+              {{ sortKey() === 'stargazers_count' && sortDir() === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="setSort('forks_count')" class="repo-table__th--sortable">
+            Forks
+            <span class="repo-table__sort-icon" [class.active]="sortKey() === 'forks_count'">
+              {{ sortKey() === 'forks_count' && sortDir() === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+          <th (click)="setSort('updated_at')" class="repo-table__th--sortable">
+            Updated
+            <span class="repo-table__sort-icon" [class.active]="sortKey() === 'updated_at'">
+              {{ sortKey() === 'updated_at' && sortDir() === 'asc' ? '↑' : '↓' }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (repo of sortedRepos(); track repo.id) {
+          <tr class="repo-table__row" (click)="openRepo(repo.html_url)">
+            <td>
+              <span class="repo-table__name mono">{{ repo.name }}</span>
+              @if (repo.description) {
+                <span class="repo-table__desc">{{ repo.description }}</span>
+              }
+            </td>
+            <td>
+              @if (repo.language) {
+                <span class="repo-table__lang">
+                  <span
+                    class="repo-table__lang-dot"
+                    [style.background]="getLangVar(repo.language)"
+                  ></span>
+                  {{ repo.language }}
+                </span>
+              } @else {
+                <span class="repo-table__empty-val">—</span>
+              }
+            </td>
+            <td>
+              <span class="mono">{{ repo.stargazers_count }}</span>
+            </td>
+            <td>
+              <span class="mono">{{ repo.forks_count }}</span>
+            </td>
+            <td>
+              <span class="repo-table__date">
+                {{ repo.updated_at | date: 'MMM d, y' }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
