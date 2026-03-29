@@ -5,7 +5,7 @@
 
   &__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: var(--space-sm);
@@ -14,9 +14,82 @@
   &__title {
     font-size: 16px;
     font-weight: 600;
+    padding-top: 2px;
   }
 
   &__filters {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  &__search {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 8px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  &__search-input {
+    height: 28px;
+    width: 180px;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 0 10px 0 28px;
+    transition: border-color var(--transition-fast);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent-blue-muted);
+    }
+  }
+
+  &__stars-filter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__stars-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  &__stars-select {
+    height: 28px;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    padding: 0 8px;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent-blue-muted);
+    }
+  }
+
+  &__lang-filters {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
@@ -79,18 +152,15 @@
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  text-decoration: none;
   color: inherit;
   cursor: pointer;
   transition:
     border-color var(--transition-fast),
     background var(--transition-fast);
-  cursor: pointer;
 
   &:hover {
     border-color: var(--color-accent-blue-muted);
     background: var(--color-bg-tertiary);
-    text-decoration: none;
   }
 
   &__header {
@@ -110,11 +180,10 @@
   }
 
   &__description {
-    display: block;
+    display: -webkit-box;
     font-size: 13px;
     color: var(--color-text-secondary);
     line-height: 1.5;
-    display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;

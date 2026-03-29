@@ -40,7 +40,7 @@ export class GithubStateService {
   });
 
   readonly currentError = computed<ApiError | null>(() => {
-    const err = this.userResource.error();
+    const err = this.userResource.error() ?? this.reposResource.error();
     if (!err) return null;
     return this.errorHandler.handle(err);
   });
@@ -67,7 +67,7 @@ export class GithubStateService {
   });
 
   readonly totalStars = computed(() =>
-    (this.reposResource.value() ?? []).reduce((acc, repo) => acc + repo.stargazers_count, 0),
+    this.repos().reduce((acc, repo) => acc + repo.stargazers_count, 0),
   );
 
   searchUser(username: string): void {

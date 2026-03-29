@@ -6,23 +6,57 @@
 
     @if (!isLoading) {
       <div class="repos__filters">
-        <button
-          class="repos__filter-btn"
-          [class.active]="activeLanguage() === null"
-          (click)="setLanguageFilter(null)"
-        >
-          All
-        </button>
-        @for (lang of availableLanguages(); track lang) {
+        <div class="repos__search">
+          <svg
+            class="repos__search-icon"
+            viewBox="0 0 16 16"
+            width="14"
+            height="14"
+            fill="currentColor"
+          >
+            <path
+              d="M11.5 7a4.499 4.499 0 11-8.998 0A4.499 4.499 0 0111.5 7zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.03a.75.75 0 11-1.06 1.06l-3.04-3.03z"
+            />
+          </svg>
+          <input
+            class="repos__search-input"
+            type="text"
+            placeholder="Repos suchen..."
+            [formField]="repoFilter.search"
+            aria-label="Repositories suchen"
+          />
+        </div>
+
+        <div class="repos__stars-filter">
+          <label class="repos__stars-label" for="repos__stars-select"> Min. Stars </label>
+          <select class="repos__stars-select" [formField]="repoFilter.minStars">
+            <option [value]="0">Alle</option>
+            <option [value]="1">1+</option>
+            <option [value]="10">10+</option>
+            <option [value]="100">100+</option>
+            <option [value]="1000">1k+</option>
+          </select>
+        </div>
+
+        <div class="repos__lang-filters">
           <button
             class="repos__filter-btn"
-            [class.active]="activeLanguage() === lang"
-            (click)="setLanguageFilter(lang)"
+            [class.active]="activeLanguage() === null"
+            (click)="setLanguageFilter(null)"
           >
-            <span class="repos__lang-dot" [style.background]="getLangVar(lang)"></span>
-            {{ lang }}
+            All
           </button>
-        }
+          @for (lang of availableLanguages(); track lang) {
+            <button
+              class="repos__filter-btn"
+              [class.active]="activeLanguage() === lang"
+              (click)="setLanguageFilter(lang)"
+            >
+              <span class="repos__lang-dot" [style.background]="getLangVar(lang)"></span>
+              {{ lang }}
+            </button>
+          }
+        </div>
       </div>
     }
   </div>
@@ -73,7 +107,6 @@
                 {{ repo.language }}
               </span>
             }
-
             @if (repo.stargazers_count > 0) {
               <span class="repo-card__stat">
                 <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
@@ -84,7 +117,6 @@
                 {{ repo.stargazers_count }}
               </span>
             }
-
             @if (repo.forks_count > 0) {
               <span class="repo-card__stat">
                 <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
@@ -95,7 +127,6 @@
                 {{ repo.forks_count }}
               </span>
             }
-
             <span class="repo-card__updated">
               {{ repo.updated_at | date: 'MMM d, y' }}
             </span>
@@ -105,7 +136,7 @@
     </div>
 
     @if (filteredRepos().length === 0) {
-      <div class="repos__empty">No repositories found for this language filter.</div>
+      <div class="repos__empty">Keine Repositories gefunden.</div>
     }
   }
 </section>
