@@ -19,6 +19,7 @@
             />
           </svg>
           <input
+            id="repo-search"
             class="repos__search-input"
             type="text"
             placeholder="Repos suchen..."
@@ -29,7 +30,11 @@
 
         <div class="repos__stars-filter">
           <label class="repos__stars-label" for="repos__stars-select"> Min. Stars </label>
-          <select class="repos__stars-select" [formField]="repoFilter.minStars">
+          <select
+            class="repos__stars-select"
+            [formField]="repoFilter.minStars"
+            id="repos__stars-select"
+          >
             <option [value]="0">Alle</option>
             <option [value]="1">1+</option>
             <option [value]="10">10+</option>

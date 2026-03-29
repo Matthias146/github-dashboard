@@ -3,13 +3,13 @@ import { GithubStateService, RateLimitService } from './core/services';
 import { Profile } from './features/profile/profile';
 import { Repositories } from './features/repositories/repositories';
 import { Stats } from './features/stats/stats';
-import { StatCard } from './shared/components';
+import { StatCard, RecentSearches } from './shared/components';
 import { RepoTable } from './features/repo-table/repo-table';
 import { ErrorState } from './shared/components/error-state/error-state';
 
 @Component({
   selector: 'app-root',
-  imports: [Profile, Repositories, Stats, StatCard, RepoTable, ErrorState],
+  imports: [Profile, Repositories, Stats, StatCard, RepoTable, ErrorState, RecentSearches],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -29,5 +29,9 @@ export class App {
 
   setTab(tab: 'repos' | 'stats'): void {
     this.activeTab.set(tab);
+  }
+
+  selectRecent(username: string): void {
+    this.state.searchUser(username);
   }
 }

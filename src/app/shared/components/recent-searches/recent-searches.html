@@ -1,0 +1,49 @@
+@if (service.recentSearches().length > 0) {
+  <div class="recent">
+    <button class="recent__trigger" (click)="toggle()" aria-label="Letzte Suchen anzeigen">
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+        <path
+          d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z"
+        />
+      </svg>
+      <span class="recent__count">{{ service.recentSearches().length }}</span>
+    </button>
+
+    @if (isOpen()) {
+      <div class="recent__dropdown">
+        <div class="recent__dropdown-header">
+          <span class="recent__dropdown-title">Letzte Suchen</span>
+          <button class="recent__clear" (click)="clear()">Alle löschen</button>
+        </div>
+        @for (username of service.recentSearches(); track username) {
+          <div
+            class="recent__item"
+            (click)="select(username)"
+            (keydown.enter)="select(username)"
+            (keydown.space)="select(username)"
+            role="button"
+            tabindex="0"
+          >
+            <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
+              <path
+                d="M10.5 5a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.03a.75.75 0 11-1.06 1.06l-3.04-3.03z"
+              />
+            </svg>
+            <span class="recent__username mono">{{ username }}</span>
+            <button
+              class="recent__remove"
+              (click)="remove($event, username)"
+              aria-label="Entfernen"
+            >
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
+                <path
+                  d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+                />
+              </svg>
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

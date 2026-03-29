@@ -35,10 +35,11 @@
         [value]="state.username()"
         (keydown)="onKeydown($event)"
         aria-label="GitHub Username"
+        id="header_search"
       />
       <kbd class="header__kbd">↵</kbd>
     </div>
-
+    <app-recent-searches (selected)="selectRecent($event)" />
     <div class="header__meta">
       @if (rateLimit.display()) {
         <span class="header__rate-limit" [class.header__rate-limit--low]="rateLimit.isLow()">

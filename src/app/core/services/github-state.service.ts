@@ -3,6 +3,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { GithubApiService } from './github-api.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { ApiError, GithubRepo, GithubUser } from '../models';
+import { RecentSearchesService } from './recent-searches.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { ApiError, GithubRepo, GithubUser } from '../models';
 export class GithubStateService {
   private readonly api = inject(GithubApiService);
   private readonly errorHandler = inject(ErrorHandlerService);
+  private readonly recentSearches = inject(RecentSearchesService);
 
   readonly username = signal<string>('angular');
 
@@ -71,6 +73,17 @@ export class GithubStateService {
   );
 
   searchUser(username: string): void {
-    this.username.set(username.trim().toLowerCase());
+    const trimmed = username.trim().toLowerCase();
+    this.username.set(trimmed);
+
+    const check = setInterval(() => {
+      if (this.user()) {
+        this.recentSearches.add(trimmed);
+        clearInterval(check);
+      }
+      if (this.currentError()) {
+        clearInterval(check);
+      }
+    }, 200);
   }
 }
