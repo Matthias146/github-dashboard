@@ -1,0 +1,39 @@
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-md);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  &__label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+  }
+
+  &__value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  &--green &__value {
+    color: var(--color-success);
+  }
+  &--blue &__value {
+    color: var(--color-accent-blue);
+  }
+  &--amber &__value {
+    color: var(--color-warning);
+  }
+}

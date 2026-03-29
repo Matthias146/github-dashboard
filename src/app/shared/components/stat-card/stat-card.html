@@ -1,0 +1,7 @@
+<div class="stat-card" [class]="'stat-card--' + accent()">
+  <span class="stat-card__label">{{ label() }}</span>
+  <span class="stat-card__value mono">{{ value() }}</span>
+  @if (sub()) {
+    <span class="stat-card__sub">{{ sub() }}</span>
+  }
+</div>
