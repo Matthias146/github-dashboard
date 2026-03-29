@@ -5,10 +5,11 @@ import { Repositories } from './features/repositories/repositories';
 import { Stats } from './features/stats/stats';
 import { StatCard } from './shared/components';
 import { RepoTable } from './features/repo-table/repo-table';
+import { ErrorState } from './shared/components/error-state/error-state';
 
 @Component({
   selector: 'app-root',
-  imports: [Profile, Repositories, Stats, StatCard, RepoTable],
+  imports: [Profile, Repositories, Stats, StatCard, RepoTable, ErrorState],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

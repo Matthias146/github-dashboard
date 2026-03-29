@@ -1,5 +1,5 @@
-@let user = state.userResource.value();
-@let isLoading = state.userResource.isLoading();
+@let user = state.user();
+@let isLoading = state.userResource.isLoading() && !state.currentError();
 
 @if (isLoading) {
   <div class="profile-compact">

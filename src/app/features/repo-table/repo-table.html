@@ -1,4 +1,4 @@
-@let isLoading = state.reposResource.isLoading();
+@let isLoading = state.reposResource.isLoading() && !state.currentError();
 
 <div class="repo-table-wrap">
   @if (isLoading) {

@@ -14,13 +14,13 @@ export class Repositories {
   readonly activeLanguage = signal<string | null>(null);
 
   readonly availableLanguages = computed(() => {
-    const repos = this.state.reposResource.value() ?? [];
+    const repos = this.state.repos();
     const languages = repos.map((r) => r.language).filter((l): l is string => l !== null);
     return [...new Set(languages)];
   });
 
   readonly filteredRepos = computed(() => {
-    const repos = this.state.reposResource.value() ?? [];
+    const repos = this.state.repos();
     const lang = this.activeLanguage();
     return lang ? repos.filter((r) => r.language === lang) : repos;
   });

@@ -1,12 +1,15 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { GithubApiService } from './github-api.service';
+import { ErrorHandlerService } from './error-handler.service';
+import { ApiError, GithubRepo, GithubUser } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GithubStateService {
   private readonly api = inject(GithubApiService);
+  private readonly errorHandler = inject(ErrorHandlerService);
 
   readonly username = signal<string>('angular');
 
@@ -20,9 +23,30 @@ export class GithubStateService {
     stream: ({ params: username }) => this.api.getRepos(username),
   });
 
-  readonly languageStats = computed(() => {
-    const repos = this.reposResource.value() ?? [];
+  readonly user = computed<GithubUser | null>(() => {
+    try {
+      return this.userResource.value() ?? null;
+    } catch {
+      return null;
+    }
+  });
 
+  readonly repos = computed<GithubRepo[]>(() => {
+    try {
+      return this.reposResource.value() ?? [];
+    } catch {
+      return [];
+    }
+  });
+
+  readonly currentError = computed<ApiError | null>(() => {
+    const err = this.userResource.error();
+    if (!err) return null;
+    return this.errorHandler.handle(err);
+  });
+
+  readonly languageStats = computed(() => {
+    const repos = this.repos();
     const counts = repos.reduce(
       (acc, repo) => {
         if (!repo.language) return acc;
@@ -31,9 +55,7 @@ export class GithubStateService {
       },
       {} as Record<string, number>,
     );
-
     const total = Object.values(counts).reduce((a, b) => a + b, 0);
-
     return Object.entries(counts)
       .map(([language, count]) => ({
         language,

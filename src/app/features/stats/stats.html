@@ -1,4 +1,4 @@
-@let isLoading = state.reposResource.isLoading();
+@let isLoading = state.reposResource.isLoading() && !state.currentError();
 @let stats = state.languageStats();
 
 <section class="stats">

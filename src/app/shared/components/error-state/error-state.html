@@ -1,0 +1,65 @@
+<div class="error-state" [class]="'error-state--' + error().type">
+  <div class="error-state__icon">
+    @switch (error().type) {
+      @case ('not_found') {
+        <svg
+          viewBox="0 0 24 24"
+          width="32"
+          height="32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35M11 8v3m0 3h.01" />
+        </svg>
+      }
+      @case ('rate_limit') {
+        <svg
+          viewBox="0 0 24 24"
+          width="32"
+          height="32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+      }
+      @case ('forbidden') {
+        <svg
+          viewBox="0 0 24 24"
+          width="32"
+          height="32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <rect width="18" height="11" x="3" y="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      }
+      @default {
+        <svg
+          viewBox="0 0 24 24"
+          width="32"
+          height="32"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path
+            d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+          />
+        </svg>
+      }
+    }
+  </div>
+  <div class="error-state__body">
+    <span class="error-state__message">{{ error().message }}</span>
+    @if (error().statusCode) {
+      <span class="error-state__code mono">HTTP {{ error().statusCode }}</span>
+    }
+  </div>
+</div>

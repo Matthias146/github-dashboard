@@ -1,4 +1,4 @@
-@let isLoading = state.reposResource.isLoading();
+@let isLoading = state.reposResource.isLoading() && !state.currentError();
 
 <section class="repos">
   <div class="repos__header">

@@ -18,7 +18,7 @@ export class RepoTable {
   readonly sortDir = signal<SortDir>('desc');
 
   readonly sortedRepos = computed(() => {
-    const repos = this.state.reposResource.value() ?? [];
+    const repos = this.state.repos();
     const key = this.sortKey();
     const dir = this.sortDir();
 
