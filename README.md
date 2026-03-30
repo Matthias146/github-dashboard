@@ -1,59 +1,161 @@
-# GithubDashboard
+# GitHub Explorer
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+A modern GitHub profile dashboard built with Angular 21, showcasing a signals-first architecture and B2B-oriented UI patterns.
 
-## Development server
+**[Live Demo →](https://your-live-url.de)**
 
-To start a local development server, run:
+![GitHub Explorer Screenshot](./docs/screenshot.png)
+
+---
+
+## Features
+
+- **Profile Overview** — Avatar, bio, location, stats in a compact one-line layout
+- **Repository Browser** — Card grid with Signal Forms filter (search + min stars + language)
+- **Sortable Table View** — Enterprise-style table with column sorting via `computed()`
+- **Language Stats** — Horizontal breakdown bar with percentages
+- **Activity Graph** — Self-rendered SVG contribution graph from GitHub Events API
+- **Recent Searches** — localStorage-persisted search history with dropdown
+- **Live Rate Limit** — Real-time display from HTTP response headers via interceptor
+- **Error Handling** — Typed error states for 404, 403, 429 via central `ErrorHandlerService`
+- **Skeleton Loaders** — Loading states for all data sections
+
+---
+
+## Tech Stack
+
+| Category      | Technology                                             |
+| ------------- | ------------------------------------------------------ |
+| Framework     | Angular 21 (standalone components)                     |
+| Reactivity    | Signals-first — `signal()`, `computed()`, `effect()`   |
+| Data Fetching | `rxResource()` from `@angular/core/rxjs-interop`       |
+| Forms         | Signal Forms (`@angular/forms/signals`) — experimental |
+| Styling       | SCSS + CSS Custom Properties                           |
+| Testing       | Vitest via `@angular/build:unit-test`                  |
+| Linting       | ESLint + Prettier + Husky pre-commit                   |
+| API           | GitHub REST API v3                                     |
+
+---
+
+## Architecture
+
+```
+src/app/
+├── core/
+│   ├── models/          # TypeScript interfaces (GithubUser, GithubRepo, ApiError...)
+│   ├── services/        # GithubStateService, ErrorHandlerService, RateLimitService...
+│   └── interceptors/    # RateLimitInterceptor
+├── features/
+│   ├── profile/         # Compact profile card
+│   ├── repositories/    # Card grid with Signal Forms filter
+│   ├── repo-table/      # Sortable table view
+│   ├── stats/           # Language breakdown
+│   └── contribution-graph/ # SVG activity graph
+└── shared/
+    └── components/      # StatCard, ErrorState, RecentSearches
+```
+
+### Signals-first Approach
+
+All state lives in `GithubStateService` — no NgRx, no BehaviorSubjects:
+
+```ts
+// Single source of truth
+readonly username = signal<string>('angular');
+
+// Reactive data fetching
+readonly userResource = rxResource({
+  params: () => this.username(),
+  stream: ({ params }) => this.api.getUser(params),
+});
+
+// Derived state — auto-updates when repos change
+readonly languageStats = computed(() => {
+  const repos = this.repos();
+  // ...aggregate language counts
+});
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- Angular CLI 21+
+- GitHub Personal Access Token ([create one here](https://github.com/settings/tokens))
+
+### Installation
+
+```bash
+git clone https://github.com/YOUR-USERNAME/github-dashboard.git
+cd github-dashboard
+npm install
+```
+
+### Configuration
+
+Create `src/environments/environment.ts`:
+
+```ts
+export const environment = {
+  production: false,
+  githubToken: 'ghp_YOUR_TOKEN_HERE',
+};
+```
+
+> This file is in `.gitignore` — never commit your token.
+
+### Development
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open [http://localhost:4200](http://localhost:4200).
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Tests
 
 ```bash
-ng generate component component-name
+npm test
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Output in `dist/github-dashboard/browser/`.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Signal Forms
 
-```bash
-ng test
+This project uses Angular's experimental Signal Forms API (`@angular/forms/signals`) for the repository filter:
+
+```ts
+protected readonly filterModel = signal<RepoFilterModel>({
+  search: '',
+  minStars: '0',
+});
+
+protected readonly repoFilter = form(this.filterModel, (_path) => {});
 ```
 
-## Running end-to-end tests
+The `filterModel` signal drives a `computed()` that reactively filters repos — no `valueChanges.subscribe()` needed.
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## Background
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Built as a portfolio project to demonstrate Angular 21 skills for B2B frontend roles in Germany. Deliberately avoids NgRx in favor of Angular's native signals architecture.
 
-## Additional Resources
+The logistics/commercial vehicle industry background of the developer informed the focus on data-dense, enterprise-style UI patterns over consumer aesthetics.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## License
+
+MIT
