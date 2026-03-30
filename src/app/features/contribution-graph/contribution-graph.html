@@ -1,0 +1,51 @@
+@let isLoading = state.eventsResource.isLoading();
+@let grid = state.contributionGrid();
+
+<div class="contrib">
+  <div class="contrib__header">
+    <span class="contrib__title">Activity</span>
+    @if (!isLoading) {
+      <span class="contrib__count mono">
+        {{ totalContributions() }} Push Events (letzte 90 Tage)
+      </span>
+    }
+  </div>
+
+  @if (isLoading) {
+    <div class="contrib__skeleton">
+      <div class="skeleton" style="width: 100%; height: 112px; border-radius: 4px"></div>
+    </div>
+  } @else {
+    <div class="contrib__graph">
+      <div class="contrib__months">
+        @for (week of grid; track $index) {
+          <span class="contrib__month-label">
+            {{ getMonthLabel($index) ?? '' }}
+          </span>
+        }
+      </div>
+
+      <div class="contrib__weeks">
+        @for (week of grid; track $index) {
+          <div class="contrib__week">
+            @for (day of week; track day.date) {
+              <div
+                class="contrib__day"
+                [style.background]="levelColors[day.level]"
+                [title]="day.date + ': ' + day.count + ' pushes'"
+              ></div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="contrib__legend">
+        <span class="contrib__legend-label">Weniger</span>
+        @for (level of [0, 1, 2, 3, 4]; track level) {
+          <div class="contrib__legend-cell" [style.background]="levelColors[level]"></div>
+        }
+        <span class="contrib__legend-label">Mehr</span>
+      </div>
+    </div>
+  }
+</div>

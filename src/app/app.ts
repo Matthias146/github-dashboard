@@ -6,10 +6,20 @@ import { Stats } from './features/stats/stats';
 import { StatCard, RecentSearches } from './shared/components';
 import { RepoTable } from './features/repo-table/repo-table';
 import { ErrorState } from './shared/components/error-state/error-state';
+import { ContributionGraph } from './features/contribution-graph/contribution-graph';
 
 @Component({
   selector: 'app-root',
-  imports: [Profile, Repositories, Stats, StatCard, RepoTable, ErrorState, RecentSearches],
+  imports: [
+    Profile,
+    Repositories,
+    Stats,
+    StatCard,
+    RepoTable,
+    ErrorState,
+    RecentSearches,
+    ContributionGraph,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

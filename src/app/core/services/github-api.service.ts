@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { GithubUser } from '../models/github-user.model';
 import { GithubRepo } from '../models/github-repo.model';
+import { GithubEvent } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,11 @@ export class GithubApiService {
       `${this.baseUrl}/users/${username}/repos?per_page=20&sort=updated`,
       { headers: this.headers },
     );
+  }
+
+  getEvents(username: string) {
+    return this.http.get<GithubEvent[]>(`${this.baseUrl}/users/${username}/events?per_page=100`, {
+      headers: this.headers,
+    });
   }
 }

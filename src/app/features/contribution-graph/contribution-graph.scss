@@ -1,0 +1,94 @@
+.contrib {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  &__count {
+    font-size: 12px;
+    color: var(--color-text-muted);
+  }
+
+  &__graph {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  &__months {
+    display: flex;
+    gap: 2px;
+    padding-left: 0;
+  }
+
+  &__month-label {
+    width: 13px;
+    font-size: 10px;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: visible;
+    flex-shrink: 0;
+  }
+
+  &__weeks {
+    display: flex;
+    gap: 2px;
+  }
+
+  &__week {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  &__day {
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+    transition: opacity var(--transition-fast);
+    cursor: default;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  &__legend {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 4px;
+    justify-content: flex-end;
+  }
+
+  &__legend-label {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    margin: 0 2px;
+  }
+
+  &__legend-cell {
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+  }
+}
