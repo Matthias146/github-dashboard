@@ -211,3 +211,42 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .header {
+    height: auto;
+    padding: var(--space-sm) 0;
+
+    &__inner {
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: 0 var(--space-md);
+    }
+
+    &__brand {
+      flex: 1;
+    }
+
+    &__search {
+      order: 3;
+      min-width: 160px;
+      max-width: 460px;
+    }
+
+    &__input {
+      width: 100%;
+    }
+
+    &__meta {
+      margin-left: 0;
+    }
+  }
+
+  .main {
+    padding: var(--space-md) 0;
+
+    .container {
+      padding: 0 var(--space-md);
+    }
+  }
+}
