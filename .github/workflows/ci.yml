@@ -1,28 +1,30 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
+  push:
+    branches: [develop]
 
 jobs:
-  ci:
-    name: Lint, Test & Build
+  lint-and-format:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: 20
+          cache: npm
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci
+
+      - name: Format check
+        run: npm run format:check
 
       - name: Lint
         run: npm run lint
@@ -33,4 +35,4 @@ jobs:
           CI: true
 
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
